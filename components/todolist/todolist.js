@@ -11,16 +11,24 @@ function todolist(node)
   
   /* ATTRIBUTES */
   
-  /* where each added item is stored */
+  /* where each added item is stored, when this changes based on items the html list of todolist_items will change */
   this.items = [];
+  
+  /* the amount of completed tasks */
   this.complete = 0;
+  
+  /* the total number of tasks */
   this.total = 0;
   
   /* current input text */
   this.text = "";
   
   /* ERRORS */
+  
+  /* whether to show an error or not */
   this.isError = false;
+  
+  /* the message for this error */
   this.error = "";
   
   /* EVENTS */
@@ -28,37 +36,55 @@ function todolist(node)
   /* each sort button fires this */
   this.onSort = function(sorter)
   {
+    /* we want to distinguish the from the rest as they are always active */
     var sorts = ['Descending','Ascending'];
+    
+    /* loop through sorters array */
     for(var x=0,len=self.sorters.length;x<len;x++)
     {
+      /* check if Descending or Ascending sort method, if not then say if this sorter has been clicked or not, reset all others */
       if(sorts.indexOf(sorter) === -1 && sorts.indexOf(self.sorters[x].title) === -1)
       {
         self.sorters[x].active = (self.sorters[x].title === sorter);
       }
+      
+      /* if Descending or Ascending was clicked, check between them which is active */
       else if(sorts.indexOf(sorter) !== -1 && sorts.indexOf(self.sorters[x].title) !== -1)
       {
         self.sorters[x].active = (self.sorters[x].title === sorter);
       }
     }
+    
+    /* this runs the main sorting method, You will find these attached to prototype at the bottom of the page, based on sorter text clicked */
     self[sorter](self.items);
   }
   
   /* this input keyup fires this */
   this.onAdd = function(e)
   {
+    /* keycode that was clicked */
     var keyCode = (e.which || e.keyCode),
+        
+        /* a list of just the titles of the items */
         itemtitles = self.items.map(function(item){return item.title;});
+    
+    /* reset error so it will no longer show */
     self.isError = false;
     
+    /* if the key pressed was 'enter' key */
     if(keyCode === 13)
     {
+      /* check if entered text doesnt already exist in the list, if it does throw an error */
       if(itemtitles.indexOf(self.text) !== -1)
       {
         self.isError = true;
         self.error = "This already exists!";
       }
+      
+      /* if no error push new item into the items array */
       if(!self.isError)
       {
+        /* these will be all passed properties to the todolist_items component */
         self.items.push({
           title:self.text,
           hide:false,
@@ -67,27 +93,40 @@ function todolist(node)
           onComplete:self.onComplete,
           onDelete:self.onDelete
         });
+        
+        /* increment total */
         self.total += 1;
+        
+        /* reset input */
         self.text = "";
       }
     }
   }
   
-  /* when an item becomes complete */
+  /* passed to each todolist_items component to fire when a checkbox is clicked */
   this.onComplete = function(v)
   {
+    /* if checkbox is active we add one else we subtract one */
     self.complete += (v ? 1 : -1);
   }
   
+  /* passed to each todolist_items component to fire when the trashcan is clicked */
   this.onDelete = function(title)
   {
+    /* get the index of this item */
     var id = self.items.map(function(item){return item.title;}).indexOf(title);
+    
+    /* if this item was completed, subtract complete */
     if(self.items[id].complete) self.complete -= 1;
+    
+    /* delete the item from the array, splice also works, del is just shorter */
     self.items.del(id);
+    
+    /* subtract from total # of todo tasks */
     self.total -= 1;
   }
   
-  /* the sorting items */
+  /* the sorting items, array with data that is used to create the sortitems looped components, onSort method is passed to be used when user clicks each item */
   this.sorters = [
     {title:'All',active:true,onSort:this.onSort},
     {title:'Todo',active:false,onSort:this.onSort},
@@ -97,6 +136,7 @@ function todolist(node)
     {title:'Descending',active:false,onSort:this.onSort}
   ];
   
+  /* a simple filter to change the css so that the error is not shown when !isError */
   this.filters.toDisplay = function(v)
   {
     return (!v ? 'none' : 'inherit');
@@ -104,6 +144,8 @@ function todolist(node)
 }
 
 /* PROTOTYPES */
+
+/* runs when All sortitem is clicked, resets all hide to false */
 todolist.prototype.All = function(items)
 {
   for(var x=0,len=this.items.length;x<len;x++)
@@ -112,6 +154,7 @@ todolist.prototype.All = function(items)
   }
 }
 
+/* runs when Ascending sortitem is clicked, sorts titles alphabetically */
 todolist.prototype.Ascending = function(items)
 {
   items.sort(function(a,b){
@@ -119,6 +162,7 @@ todolist.prototype.Ascending = function(items)
   });
 }
 
+/* runs when Descending sortitem is clicked, sorts titles alphabetically in reverse */
 todolist.prototype.Descending = function(items)
 {
   items.sort(function(a,b){
@@ -126,6 +170,7 @@ todolist.prototype.Descending = function(items)
   });
 }
 
+/* runs when Todo sortitem is clicked, hides all completed items */
 todolist.prototype.Todo = function(items)
 {
   for(var x=0,len=this.items.length;x<len;x++)
@@ -134,6 +179,7 @@ todolist.prototype.Todo = function(items)
   }
 }
 
+/* runs when Completed sortitem is clicked, hides all non completed items */
 todolist.prototype.Completed = function(items)
 {
   for(var x=0,len=this.items.length;x<len;x++)
@@ -142,6 +188,7 @@ todolist.prototype.Completed = function(items)
   }
 }
 
+/* runs when Favorites sortitem is clicked, hides all non favorited items */
 todolist.prototype.Favorites = function(items)
 {
   for(var x=0,len=this.items.length;x<len;x++)

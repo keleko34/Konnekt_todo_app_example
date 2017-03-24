@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Konnekt todo app</title>
+    <link href="index.css" rel="stylesheet" />
+    <script type="text/javascript" src="../../node_modules/konnekt/Konnekt/Build/Konnekt.js"></script>
+  </head>
+  <body>
+    <todoapp></todoapp>
+    <script type="text/javascript">
+      Konnekt().localRouting(true)(document.querySelector('todoapp'));
+    </script>
+  </body>
+</html>

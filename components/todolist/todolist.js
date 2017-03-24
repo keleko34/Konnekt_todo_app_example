@@ -23,23 +23,22 @@ function todolist(node)
   this.isError = false;
   this.error = "";
   
-  /* the sorting items */
-  this.sorters = [
-    {title:'All',active:true,onSort:this.sort},
-    {title:'Uncomplete',active:false,onSort:this.onSort},
-    {title:'Complete',active:false,onSort:this.onSort},
-    {title:'Ascending',active:false,onSort:this.onSort},
-    {title:'Descending',active:false,onSort:this.onSort}
-  ];
-  
   /* EVENTS */
   
   /* each sort button fires this */
   this.onSort = function(sorter)
   {
+    var sorts = ['Descending','Ascending'];
     for(var x=0,len=self.sorters.length;x<len;x++)
     {
-      self.sorters[x].active = (self.sorters[x].title === sorter);
+      if(sorts.indexOf(sorter) === -1 && sorts.indexOf(self.sorters[x].title) === -1)
+      {
+        self.sorters[x].active = (self.sorters[x].title === sorter);
+      }
+      else if(sorts.indexOf(sorter) !== -1 && sorts.indexOf(self.sorters[x].title) !== -1)
+      {
+        self.sorters[x].active = (self.sorters[x].title === sorter);
+      }
     }
     self[sorter](self.items);
   }
@@ -47,26 +46,24 @@ function todolist(node)
   /* this input keyup fires this */
   this.onAdd = function(e)
   {
-    var keyCode = (e.which || e.keyCode);
-    
-    if(self.items.map(function(item){return item.title;}).indexOf(self.text) !== -1)
-    {
-      self.isError = true;
-      self.error = "This already exists!";
-    }
-    else
-    {
-      self.isError = false;
-    }
+    var keyCode = (e.which || e.keyCode),
+        itemtitles = self.items.map(function(item){return item.title;});
+    self.isError = false;
     
     if(keyCode === 13)
     {
+      if(itemtitles.indexOf(self.text) !== -1)
+      {
+        self.isError = true;
+        self.error = "This already exists!";
+      }
       if(!self.isError)
       {
         self.items.push({
           title:self.text,
           hide:false,
           complete:false,
+          favorite:false,
           onComplete:self.onComplete,
           onDelete:self.onDelete
         });
@@ -84,7 +81,25 @@ function todolist(node)
   
   this.onDelete = function(title)
   {
-    self.items.splice(self.items.map(function(item){return item.title;}).indexOf(title),1);
+    var id = self.items.map(function(item){return item.title;}).indexOf(title);
+    if(self.items[id].complete) self.complete -= 1;
+    self.items.del(id);
+    self.total -= 1;
+  }
+  
+  /* the sorting items */
+  this.sorters = [
+    {title:'All',active:true,onSort:this.onSort},
+    {title:'Todo',active:false,onSort:this.onSort},
+    {title:'Completed',active:false,onSort:this.onSort},
+    {title:'Favorites',active:false,onSort:this.onSort},
+    {title:'Ascending',active:false,onSort:this.onSort},
+    {title:'Descending',active:false,onSort:this.onSort}
+  ];
+  
+  this.filters.toDisplay = function(v)
+  {
+    return (!v ? 'none' : 'inherit');
   }
 }
 
@@ -99,10 +114,6 @@ todolist.prototype.All = function(items)
 
 todolist.prototype.Ascending = function(items)
 {
-  for(var x=0,len=this.items.length;x<len;x++)
-  {
-    this.items[x].hide = false;
-  }
   items.sort(function(a,b){
     return (a.title > b.title ? -1 : 1);
   });
@@ -110,16 +121,12 @@ todolist.prototype.Ascending = function(items)
 
 todolist.prototype.Descending = function(items)
 {
-  for(var x=0,len=this.items.length;x<len;x++)
-  {
-    this.items[x].hide = false;
-  }
   items.sort(function(a,b){
     return (a.title > b.title ? 1 : -1);
   });
 }
 
-todolist.prototype.Uncomplete = function(items)
+todolist.prototype.Todo = function(items)
 {
   for(var x=0,len=this.items.length;x<len;x++)
   {
@@ -127,10 +134,18 @@ todolist.prototype.Uncomplete = function(items)
   }
 }
 
-todolist.prototype.Complete = function(items)
+todolist.prototype.Completed = function(items)
 {
   for(var x=0,len=this.items.length;x<len;x++)
   {
     this.items[x].hide = (!this.items[x].complete);
+  }
+}
+
+todolist.prototype.Favorites = function(items)
+{
+  for(var x=0,len=this.items.length;x<len;x++)
+  {
+    this.items[x].hide = (!this.items[x].favorite);
   }
 }

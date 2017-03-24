@@ -8,6 +8,7 @@ function todobutton()
 {
   /* ATTRIBUTES */
   this.isActive = false;
+  this.title = "";
   this.filters.activeText = function(v)
   {
     return (v ? 'active' : 'inactive');

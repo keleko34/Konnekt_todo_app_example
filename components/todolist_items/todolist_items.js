@@ -16,11 +16,16 @@ function todolist_items(node)
   this.onComplete = function(){};
   this.onDelete = function(){};
   
-  /* FILTERS */ 
+  /* FILTERS */
+  this.filters.isHidden = function(v)
+  {
+    return (v ? 'none' : 'inherit');
+  }
+  
   this.filters.statusBackground = function(v)
   {
     v = (typeof v === 'string' ? (v === 'true') : v);
-    return (v ? '#4bd32b' : '#FFF');
+    return (v ? '#5a8451' : '#FFF');
   }
   
   this.filters.statusColor = function(v)
@@ -54,7 +59,7 @@ function todolist_items(node)
   
   this.onClickFavorite = function(e)
   {
-    self.favorite = true;
+    self.favorite = !self.favorite;
   }
   
   this.onClickDelete = function(e)

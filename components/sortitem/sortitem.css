@@ -4,6 +4,10 @@
  *  a button used for sorting the list
  ********************************/
 
-.sortitem {
+.{{local}} .sortitem {
+  cursor:pointer;
+}
 
+.{{local}} .sortitem--active {
+  color:#7db770;
 }

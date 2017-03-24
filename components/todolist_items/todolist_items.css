@@ -9,7 +9,8 @@
   position: relative;
   border-top: 2px dashed #e9e9e9;
   height: 30px;
-  margin: 0px 10px;
+  margin: 0px 14px;
+  display:{{hide | isHidden}}
 }
 
 .{{local}} .todolist_items__title {
@@ -20,16 +21,37 @@
   font-size: 16px;
 }
 
-.todolist_items__complete {
+.{{local}} .todolist_items__complete {
   width: 14px;
   height: 14px;
   position: absolute;
   left: 12px;
-  top: 4px;
+  top: 7px;
 }
 
-.todolist_items__complete__checkbox {
+.{{local}} .todolist_items__complete__checkbox {
   width: 14px;
   height: 14px;
   margin: 0;
+  cursor:pointer;
+}
+
+.{{local}} .todolist_items__controls {
+  position: absolute;
+  right: 24px;
+  top: 6px;
+}
+
+.{{local}} .todolist_items__controls__icon {
+  width:18px;
+  height:18px;
+  cursor:pointer;
+}
+
+.{{local}} .todolist_items__controls .todobutton {
+  position: absolute;
+}
+
+.{{local}} .todolist_items__controls .todobutton[title="favorite"] {
+  right:8px;
 }

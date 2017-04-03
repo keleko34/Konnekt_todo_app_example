@@ -31,7 +31,7 @@
     "konnekt": "^0.3.8"
   },
   "scripts": {
-    "start":"gulp server -p 8080 -r ."
+    "start": "gulp server -p 8080 -r ."
   },
   "maintainers": [
     {
@@ -40,6 +40,7 @@
     }
   ],
   "devDependencies": {
-    "K_Tasks": "^0.7.8"
+    "K_Tasks": "^0.7.8",
+    "konnektrt": "^0.2.0"
   }
 }

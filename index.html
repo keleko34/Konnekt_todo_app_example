@@ -4,11 +4,16 @@
     <title>Konnekt todo app</title>
     <link href="index.css" rel="stylesheet" />
     <script type="text/javascript" src="../../node_modules/konnekt/Konnekt/Build/Konnekt.js"></script>
-  </head>
-  <body>
-    <todoapp></todoapp>
     <script type="text/javascript">
-      Konnekt().localRouting(true)(document.querySelector('todoapp'));
+
+      /* konnekt now reads any global config object, `base` property sets initial component to load */
+      var config = {base:'todoapp'};
+
+      /* You can now set localRouting through constructor, @Param1 = isLocalRouting, @Param2 = InitialHashrouting, els You must call hashrouting Yourself */
+      document.addEventListener("DOMContentLoaded", function(event) {
+        Konnekt(true,true);
+      });
     </script>
-  </body>
+  </head>
+  <body></body>
 </html>

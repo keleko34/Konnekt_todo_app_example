@@ -14,10 +14,23 @@
 .todoapp__title {
     font-family: sans-serif;
     color: #c8c8c8;
-    font-size: 40px;
+  font-size: {{fontSize}}px;
     margin: 50px auto 10px auto;
     width: 600px;
     text-align: center;
+}
+
+.todoapp__inforomation {
+  position: absolute;
+  left: 50%;
+  top: 45px;
+  margin-left: 60px;
+}
+
+.todoapp__inforomation__icon {
+  width:16px;
+  height:16px;
+  cursor: pointer;
 }
 
 .todoapp__list {

@@ -4,11 +4,14 @@
     <title>Konnekt todo app</title>
     <link href="index.css" rel="stylesheet" />
     <script type="text/javascript" src="../../node_modules/konnekt/Konnekt/Build/Konnekt.js"></script>
-  </head>
-  <body>
-    <todoapp></todoapp>
     <script type="text/javascript">
-      Konnekt()(document.querySelector('todoapp'));
+      var config = {
+        base:'todoapp'
+      };
+      document.addEventListener('DOMContentLoaded',function(){
+        Konnekt(false,true);
+      });
     </script>
-  </body>
+  </head>
+  <body></body>
 </html>

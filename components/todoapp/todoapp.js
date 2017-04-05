@@ -7,10 +7,8 @@
 function todoapp()
 {
   var self = this;
-
   /* the main title */
   this.title = "todo";
-  
   this.fontSize = 40;
 
   /* a simple filter that returns uppercase string */
@@ -18,14 +16,6 @@ function todoapp()
   {
     return v.toUpperCase();
   }
-
-  this.clickme = function(e)
-  {
-    self.title = "something different";
-    self.fontSize += 2;
-  }
-
-  this.exports = ['title','fontSize'];
 }
 
 /* PROTOTYPES */

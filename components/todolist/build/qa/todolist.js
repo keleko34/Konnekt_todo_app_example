@@ -119,7 +119,7 @@ function todolist(node)
     var id = self.items.map(function(item){return item.title;}).indexOf(title);
     
     /* if this item was completed, subtract complete */
-    if(self.items[id].complete) self.complete -= 1;
+    if((typeof self.items[id].complete === 'string' ? (self.items[id].complete === 'true') : !!self.items[id].complete)) self.complete -= 1;
     
     /* delete the item from the array, splice also works, del is just shorter */
     self.items.del(id);

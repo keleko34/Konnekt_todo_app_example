@@ -119,7 +119,7 @@ function todolist(node)
     var id = self.items.map(function(item){return item.title;}).indexOf(title);
     
     /* if this item was completed, subtract complete */
-    if(self.items[id].complete) self.complete -= 1;
+    if((typeof self.items[id].complete === 'string' ? (self.items[id].complete === 'true') : !!self.items[id].complete)) self.complete -= 1;
     
     /* delete the item from the array, splice also works, del is just shorter */
     self.items.del(id);
@@ -160,7 +160,7 @@ todolist.prototype.All = function(items)
 todolist.prototype.Ascending = function(items)
 {
   items.sort(function(a,b){
-    return (a.title > b.title ? -1 : 1);
+    return (a.title > b.title ? 1 : -1);
   });
 }
 
@@ -168,7 +168,7 @@ todolist.prototype.Ascending = function(items)
 todolist.prototype.Descending = function(items)
 {
   items.sort(function(a,b){
-    return (a.title > b.title ? 1 : -1);
+    return (a.title > b.title ? -1 : 1);
   });
 }
 
@@ -177,7 +177,7 @@ todolist.prototype.Todo = function(items)
 {
   for(var x=0,len=this.items.length;x<len;x++)
   {
-    this.items[x].hide = (!!this.items[x].complete);
+    this.items[x].hide = (!!(typeof this.items[x].complete === 'string' ? (this.items[x].complete === 'true') : !!this.items[x].complete));
   }
 }
 
@@ -186,7 +186,7 @@ todolist.prototype.Completed = function(items)
 {
   for(var x=0,len=this.items.length;x<len;x++)
   {
-    this.items[x].hide = (!this.items[x].complete);
+    this.items[x].hide = (!(typeof this.items[x].complete === 'string' ? (this.items[x].complete === 'true') : !!this.items[x].complete));
   }
 }
 
@@ -199,6 +199,6 @@ todolist.prototype.Favorites = function(items)
   }
 }
 todolist.prototype.k_html = "<!-- todolist Created by keleko34, the main list for the todo app --><div class='todolist'>  <div class='todolist__bar'>    <div class='todolist__bar__status'>{{complete}}/{{total}} completed</div>    <div class='todolist__bar__sort'>{{for sorters loop sortitem}}</div>  </div>  <div class='todolist__add'>    <img class='todolist__add__icon' src='assets/img/icons/edit.svg' />    <input class='todolist__add__input' type='text' placeholder='What needs to be done?' value='{{text}}' onkeyup='{{onAdd}}' />    <div class='todolist__add__error'>{{error}}</div>  </div>  <div class='todolist__items'>{{for items loop todolist_items}}</div></div>";
-todolist.prototype.k_css = "/********************************* *  todolist *  Created by keleko34 *  the main list for the todo app ********************************/.todolist {}.todolist__bar {  height: 25px;  border-bottom: 2px solid #e9e9e9;  font-family: sans-serif;  color: #888787;  font-size: 14px;  margin-left: 10px;  margin-right: 10px;  position: relative;}.todolist__bar__status {  line-height: 25px;  margin-left: 10px;  position: absolute;  left:0px;}.todolist__bar__sort {  position: absolute;  right: 0px;}.todolist__bar__sort .Wrapper__sortitem {  float:left;  margin-right:3px;  margin-right: 15px;  line-height: 25px;}.todolist__add {  height: 40px;  position: relative;}.todolist__add__icon {  height: 24px;  position: absolute;  left: 19px;  top: 8px;}.todolist__add__input {  height: 40px;  width: calc(100% - 62px);  margin: 0px 10px;  padding: 0;  outline: transparent;  border: none;  padding-left: 42px;  line-height: 40px;  font-family: sans-serif;  font-size: 16px;  color: #B1A9A9;}.{{local}} .todolist__add__error {  position: absolute;  right: 15px;  top: 8px;  border: 2px solid #fb7f7f;  padding: 3px;  background: #ffdddd;  border-radius: 3px;  display:{{isError | toDisplay}}}";
+todolist.prototype.k_css = "/********************************* *  todolist *  Created by keleko34 *  the main list for the todo app ********************************/.todolist {}.todolist__items {  overflow: auto;  height: 333px;}.todolist__bar {  height: 25px;  border-bottom: 2px solid #e9e9e9;  font-family: sans-serif;  color: #888787;  font-size: 14px;  margin-left: 10px;  margin-right: 10px;  position: relative;}.todolist__bar__status {  line-height: 25px;  margin-left: 10px;  position: absolute;  left:0px;}.todolist__bar__sort {  position: absolute;  right: 0px;}.todolist__bar__sort .Wrapper__sortitem {  float:left;  margin-right:3px;  margin-right: 15px;  line-height: 25px;}.todolist__add {  height: 40px;  position: relative;}.todolist__add__icon {  height: 24px;  position: absolute;  left: 19px;  top: 8px;}.todolist__add__input {  height: 40px;  width: calc(100% - 62px);  margin: 0px 10px;  padding: 0;  outline: transparent;  border: none;  padding-left: 42px;  line-height: 40px;  font-family: sans-serif;  font-size: 16px;  color: #B1A9A9;}.{{local}} .todolist__add__error {  position: absolute;  right: 15px;  top: 8px;  border: 2px solid #fb7f7f;  padding: 3px;  background: #ffdddd;  border-radius: 3px;  display:{{isError | toDisplay}}}";
 return todolist;
 }());

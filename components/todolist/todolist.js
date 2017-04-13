@@ -107,7 +107,7 @@ function todolist(node)
   this.onComplete = function(v)
   {
     /* if checkbox is active we add one else we subtract one */
-    self.complete += (v ? 1 : -1);
+    self.complete += ((typeof v === 'string' ? (v === 'true') : !!v) ? 1 : -1);
   }
   
   /* passed to each todolist_items component to fire when the trashcan is clicked */
@@ -158,7 +158,7 @@ todolist.prototype.All = function(items)
 todolist.prototype.Ascending = function(items)
 {
   items.sort(function(a,b){
-    return (a.title > b.title ? -1 : 1);
+    return (a.title > b.title ? 1 : -1);
   });
 }
 
@@ -166,7 +166,7 @@ todolist.prototype.Ascending = function(items)
 todolist.prototype.Descending = function(items)
 {
   items.sort(function(a,b){
-    return (a.title > b.title ? 1 : -1);
+    return (a.title > b.title ? -1 : 1);
   });
 }
 
@@ -175,7 +175,7 @@ todolist.prototype.Todo = function(items)
 {
   for(var x=0,len=this.items.length;x<len;x++)
   {
-    this.items[x].hide = (!!this.items[x].complete);
+    this.items[x].hide = (!!(typeof this.items[x].complete === 'string' ? (this.items[x].complete === 'true') : !!this.items[x].complete));
   }
 }
 
@@ -184,7 +184,7 @@ todolist.prototype.Completed = function(items)
 {
   for(var x=0,len=this.items.length;x<len;x++)
   {
-    this.items[x].hide = (!this.items[x].complete);
+    this.items[x].hide = (!(typeof this.items[x].complete === 'string' ? (this.items[x].complete === 'true') : !!this.items[x].complete));
   }
 }
 

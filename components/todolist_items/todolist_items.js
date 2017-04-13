@@ -6,6 +6,7 @@
 
 function todolist_items(node)
 {
+
   var self = this;
   
   /* ATTRIBUTES */

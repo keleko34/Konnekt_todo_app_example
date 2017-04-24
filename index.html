@@ -5,12 +5,10 @@
     <link href="index.css" rel="stylesheet" />
     <script type="text/javascript" src="../../node_modules/konnekt/Konnekt/Build/Konnekt.js"></script>
     <script type="text/javascript">
-      var config = {
-        base:'todoapp'
-      };
-      document.addEventListener('DOMContentLoaded',function(){
-        Konnekt().hashRouting(true);
-      });
+        Konnekt({
+          base:'todoapp'
+        })
+        .hashRouting(true);
     </script>
   </head>
   <body></body>

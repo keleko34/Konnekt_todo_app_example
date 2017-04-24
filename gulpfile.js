@@ -1,1 +1,1 @@
-require('K_Tasks')();
+require('konnekt')();

@@ -28,7 +28,7 @@
     "url": "https://github.com/keleko34/Konnekt_todo_app_example/issues"
   },
   "dependencies": {
-    "konnekt": "^0.6.0"
+    "konnekt": "^0.6.5"
   },
   "scripts": {
     "start": "gulp server -p 8080 -r ."
@@ -40,7 +40,6 @@
     }
   ],
   "devDependencies": {
-    "K_Tasks": "^0.8.1",
     "konnektrt": "^0.2.0"
   }
 }

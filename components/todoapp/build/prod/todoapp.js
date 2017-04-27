@@ -12,12 +12,6 @@ function todoapp()
   /* the main title */
   this.title = "todo";
   this.fontSize = 40;
-
-  /* a simple filter that returns uppercase string */
-  this.filters.toUpperCase = function(v)
-  {
-    return v.toUpperCase();
-  }
 }
 
 /* PROTOTYPES */

@@ -4,6 +4,7 @@
 var krt = require('konnektrt')();
 
 module.exports = function(req,res,next){
+  console.log("testing");
   req.sessions = {cms:true};
   krt(req,res,next);
 };

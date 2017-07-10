@@ -144,7 +144,7 @@ function todolist(node)
     return (!v ? 'none' : 'inherit');
   }
   
-  /** Debug Code **/
+  /** Debug Code
   
   for(var x=0,len=300;x<len;x++)
   {
@@ -161,7 +161,7 @@ function todolist(node)
   console.log(items);
   self.items = items;
   
-  /** Debug Code **/
+  Debug Code **/
 }
 
 /* PROTOTYPES */

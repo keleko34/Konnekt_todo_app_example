@@ -28,10 +28,10 @@
     "url": "https://github.com/keleko34/Konnekt_todo_app_example/issues"
   },
   "dependencies": {
-    "konnekt": "^0.8.77"
+    "konnekt": "^0.8.79"
   },
   "scripts": {
-    "start": "gulp server -p 8080 -r ."
+    "server": "node init --task server --port 8080"
   },
   "maintainers": [
     {
@@ -41,8 +41,5 @@
   ],
   "devDependencies": {
     "konnektrt": "^0.2.0"
-  },
-  "scripts":{
-    "server": "node init --task server --port 8080"
   }
 }

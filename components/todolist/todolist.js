@@ -11,9 +11,11 @@ function todolist(node)
   
   /* ATTRIBUTES */
   
+  var items = [];
+  
   /* where each added item is stored, when this changes based on items the html list of todolist_items will change */
   this.items = [];
-  
+
   /* the amount of completed tasks */
   this.complete = 0;
   
@@ -141,6 +143,25 @@ function todolist(node)
   {
     return (!v ? 'none' : 'inherit');
   }
+  
+  /** Debug Code **/
+  
+  for(var x=0,len=300;x<len;x++)
+  {
+    items.push({
+      title:x.toString(),
+      hide:false,
+      complete:false,
+      favorite:false,
+      onComplete:self.onComplete,
+      onDelete:self.onDelete
+    });
+  }
+  
+  console.log(items);
+  self.items = items;
+  
+  /** Debug Code **/
 }
 
 /* PROTOTYPES */
